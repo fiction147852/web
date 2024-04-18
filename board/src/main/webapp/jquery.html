@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src='js.query-3.7.1.js'></script>
+</head>
+<body>
+	<!-- webapp/jauery.html -->
+	<ul id="list"></ul>
+	
+	<script>
+	//DOM제어.
+	//document.createElement('div')
+	//innerText = 'hello';
+	$('body').append($('<div />').text('hello'));
+	//$('<div />').text('hello');//<div>hello</div>
+	//$를쓰고 ('') 안에 선택자를 넣고 사용 //그뒤.text를 사용해서 함수를 사용
+	
+	$('#list').append($('<li>Apple</li>'),
+						$('<li/>').text('Banana'));	//.text를 사용해야 text를 입력 할수있다 
+	
+	//$ , _ 특수문자 변수명에 사용 가능
+	let $cherry = $('<li />').text('Chery');
+	$('#list').append($cherry);
+	</script>
+</body>
+</html>
