@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<link href="css/styles.css" rel="stylesheet" />
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+		// 보여줄 항목.[id, centerName, address, phoneNumber]
+		const fields = ['id', 'centerName', 'address', 'phoneNumber'];
+		let centers = [];
+		let sidoList = []; //sido 중복값이 제거된 시도정보를 저장
+		
+
+		let url =
+			'https://api.odcloud.kr/api/15077586/v1/centers?page=1&perPage=284&serviceKey=qCwQYxNXeK%2FaB1Ngf9oNZDttjmjQ6ku1OdR6%2Fd0Jj5EIdqOxMXolplih%2BYjTqB4uxCuK636co3tf9T5%2Fr9OLvw%3D%3D';
+		let xhtp = new XMLHttpRequest();
+		xhtp.open('get', url);
+		xhtp.send();
+		xhtp.onload = function () {
+			let result = JSON.parse(xhtp.response);
+			centers = result.data; //[214건....]
+			centers.forEach((center, idx) => {
+				if( idx < 10){
+					document.getElementById('list').append(makeRow(center));
+				}
+			});
+			
+			centers.forEach(center =>{
+				if (sidoList.indexOf(center.sido) == -1){
+					sidoList.push(center.sido);
+				}
+			})
+
+			console.log(sidoList);
+
+			
+			// sidoList 를 이용해서 option 태그 생성.
+			let searchSido = document.getElementById('searchSido')
+			sidoList.forEach(sido => {
+				let opt = document.createElement('option');
+				opt.setAttribute('value', sido);
+				opt.innerText = sido;
+				searchSido.appendChild(opt);
+			});
+
+
+			
+		}
+
+		document.addEventListener("DOMContentLoaded", function (e) {
+			// 페이지 로딩된 후에 처리한다.
+			let show = document.getElementById('show');
+			let list = document.getElementById('list');
+			let findBtn = document.getElementById('findBtn');
+
+			findBtn.addEventListener('click', function (e) {
+				list.innerHTML = '';
+				let keyword = document.getElementById('keyword').value;
+
+				centers //
+					.filter(center => center.centerName.indexOf(keyword) != -1) //
+					.forEach(center => list.append(makeRow(center)));
+			});
+
+		});
+
+		// center정보 한건에 대한 tr생성해주는 함수.
+		function makeRow(center) {
+			let tr = document.createElement('tr');
+			fields.forEach(field => {
+				let td = document.createElement('td');
+				let txt = center[field];
+				td.innerText = (txt + '').replace('코로나19', '');
+				tr.appendChild(td);
+				
+			})
+			tr.addEventListener('click', function(e){
+				window.open('map.jsp?lat=' + center.lat + '&lng=' + center.lng);
+			})
+
+			return tr;
+		}
+
+
+
+			
+		
+	</script>
+</head>
+
+<body>
+	 
+	<!-- 센터명: <input type="text" id="keyword"> -->
+	시도: <select id="searchSido">
+			<option value="">선택</option>
+			<option value="서울특별시">서울특별시</option>
+			<option value="인천광역시">인천광역시</option>
+		</select>
+
+	<button id="findBtn">찾기</button>
+
+	<div id="show">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>센터id</th>
+					<th>센터명</th>
+					<th>센터주소</th>
+					<th>연락처</th>
+				</tr>
+			</thead>
+			<tbody id="list">
+			</tbody>
+		</table>
+	</div>
+
+</body>
+
+</html>

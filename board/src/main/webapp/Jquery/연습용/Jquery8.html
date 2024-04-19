@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery Element Insert</title>
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<style>
+		table, tr, td { 
+			border: 2px solid red;
+			border-collapse: collapse;
+		}
+		table { margin-bottom: 15px; }
+	</style>
+	<script>
+		$(function() {
+			$("button").on("click", function() {
+				// id가 "firstRow"인 요소의 바로 앞에 새로운 <tr>요소를 추가함.
+				$("#firstRow").before("<tr><td>새로운 행이에요!</td></tr>");
+				//before는 전이니까 td 전 그러니까 위(앞)에 만들어준다
+				//after는 이후니까 td 이후 그러니까 밑(뒤)에 만들어준다
+				//inserBefore랑 뭐가다른지 보기
+			});
+		});
+	</script>
+</head>
+
+<body>
+
+	<h1>.before() 메소드</h1>
+	<table>
+		<tr id="firstRow">
+			<td>첫 번째 셀이에요!</td>
+			<td>두 번째 셀이에요!</td>
+		</tr>
+	</table>
+	<button>행 추가</button>
+	
+</body>
+
+</html>
