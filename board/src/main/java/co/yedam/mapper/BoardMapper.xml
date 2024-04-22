@@ -26,7 +26,7 @@
     select sysdate from dual
   </select>
   
-  <select id="selectList" parameterType="co.yedam.common.SearchVO" resultType="co.yedam.vo.BoardVO">
+  <select id="selectList" parameterType="co.yedam.vo.SearchVO" resultType="co.yedam.vo.BoardVO">
     select *
     from(
     	select rownum rn,b.*

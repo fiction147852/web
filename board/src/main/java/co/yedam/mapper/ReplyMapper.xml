@@ -6,7 +6,7 @@
 <mapper namespace="co.yedam.mapper.ReplyMapper">
 
 	<select id="replyListNoPage" resultType="co.yedam.vo.ReplyVO"
-		parameterType="co.yedam.common.SearchVO">
+		parameterType="co.yedam.vo.SearchVO">
 
 		select *
 		from tbl_reply 
@@ -16,7 +16,7 @@
 
 
 	<select id="replyList" resultType="co.yedam.vo.ReplyVO"
-		parameterType="co.yedam.common.SearchVO">
+		parameterType="co.yedam.vo.SearchVO">
 		select *
 		from (select rownum rn, r.*
 			from tbl_reply r
